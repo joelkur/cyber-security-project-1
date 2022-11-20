@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ user.get_username }}'s {% if list_completed_todos %}completed{% endif %} todos
+{% endblock %}
+
+{% block content %}
+<h1>Todos</h1>
+
+{% if todos|length %}
+<ul>
+  {% for todo in todos %}
+  <li>
+    {{ todo.text }}
+    {% if list_completed_todos %}
+    <a href="/todos/{{todo.id}}/set-done/?done=False">
+    {% else %}
+    <a href="/todos/{{todo.id}}/set-done/">
+    {% endif %}
+      {% if not list_completed_todos %}
+      Mark done
+      {% else %}
+      Mark undone
+      {% endif %}
+    </a>
+    <a href="#">Delete</a>
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p>No todos found.</p>
+{% endif %}
+
+<h2>Add new todo</h2>
+<form action="todos" method="POST">
+  {% csrf_token %}
+  <label for="text">Todo description</label>
+  <input id="text" name="text" />
+  <button type="submit">Add</button>
+</form>
+{% endblock %}

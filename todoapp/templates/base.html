@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>{% block title %}{% endblock %}</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="css/style.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
+</head>
+
+<body>
+
+  <main class="container">
+    {% if user.is_authenticated %}
+    <nav>
+      <ul>
+        <li><a href="/">Todos</a></li>
+        <li><a href="/todos/completed/">Completed</a></li>
+      </ul>
+      <ul>
+        <li><strong>Logged in as {{ user.get_username }}</strong></li>
+        <li><a href="/logout/">Log out</a></li>
+      </ul>
+    </nav>
+    {% endif %}
+
+    {% block content %}{% endblock %}
+  </main>
+
+
+</body>
+
+</html>
