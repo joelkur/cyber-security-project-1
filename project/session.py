@@ -1,7 +1,10 @@
 import django.contrib.sessions.backends.db as db
 
 
+# Suggested fix would be to use built-in session manager
 class SessionStore(db.SessionStore):
+    """Insecure session store."""
+
     session_counter = 0
 
     def _get_new_session_key(self):

@@ -55,3 +55,23 @@ Another way of fixing the flaw would be to use prepared statements. Prepared sta
 Links to the fixes:
 - [/todoapp/views.py#L46](/todoapp/views.py#L46)
 - [/todoapp/views.py#L53](/todoapp/views.py#L53)
+
+### Flaw 4: [Cross-site scripting (XSS)](https://owasp.org/Top10/A03_2021-Injection/)
+Links to the flaw sources:
+- [/todoapp/views.py#L43](/todoapp/templates/todos.html#L22)
+
+The description of todos is assumed to be safe and is rendered as-is to the HTML. This is problematic as now potentially 
+
+Links to the fixes:
+- [/todoapp/views.py#L46](/todoapp/templates/todos.html#L21)
+
+### Flaw 5: [Identification and Authentication Failures](https://owasp.org/Top10/A07_2021-Identification_and_Authentication_Failures/)
+Links to the flaw sources:
+- [/project/session.py#L4](/project/session.py#L5)
+
+Session keys are predictable and sessions are not invalidated during logout. This can lead to session hijacking meaning an attacker can impersonate other users. Since the session key is predictable and not properly invalidated, an attacker could easily guess session keys by brute forcing it.
+
+The session key should be fixed to be unpredictable, such as securely generated random bytes. The session should also be expired and invalidated when the user logs out of the system.
+
+Django has this functionality already built-in, so again a simple fix in this application would be to remove the custom `SessionStore` and use a default one.
+
