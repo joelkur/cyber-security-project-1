@@ -20,5 +20,6 @@ class User(AbstractUser):
 
 class Todo(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    text = models.TextField()
+    title = models.TextField()
+    description = models.TextField()
     done = models.BooleanField(default=False)

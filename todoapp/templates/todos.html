@@ -32,22 +32,22 @@
   {% for todo in todos %}
   <li>
     <div class="todo">
-    <!-- FIX: {{ todo.text }} -->
-    <span>{{ todo.text|safe }}</span>
-      <div>
-        {% if list_completed_todos %}
-        <a href="/todos/{{todo.id}}/set-done/?done=False">
+    <!-- FIX: {{ todo.title }} -->
+    <a href="/todos/{{todo.id}}/">{{ todo.title|safe }}</a>
+    <div>
+      {% if list_completed_todos %}
+      <a href="/todos/{{todo.id}}/set-done/?done=False">
+      {% else %}
+      <a href="/todos/{{todo.id}}/set-done/">
+      {% endif %}
+        {% if not list_completed_todos %}
+        Mark done
         {% else %}
-        <a href="/todos/{{todo.id}}/set-done/">
+        Mark undone
         {% endif %}
-          {% if not list_completed_todos %}
-          Mark done
-          {% else %}
-          Mark undone
-          {% endif %}
-        </a>
-        <a href="/todos/{{todo.id}}/delete/">Delete</a>
-      </div>
+      </a>
+      <a href="/todos/{{todo.id}}/delete/">Delete</a>
+    </div>
     </div>
   </li>
   {% endfor %}
@@ -58,8 +58,11 @@
 
 <h2>Add new todo</h2>
 <form action="todos" method="POST">
-  <label for="text">Todo description</label>
-  <input id="text" name="text" />
+  {% csrf_token %}
+  <label for="title">Title</label>
+  <input id="title" name="title" />
+  <label for="description">Description</label>
+  <textarea id="description" name="description"></textarea>
   <button type="submit">Add</button>
 </form>
 {% endblock %}

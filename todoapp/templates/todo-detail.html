@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<a href="/">Back to todo list</a>
+<h1>{{ todo.title|safe }}</h1>
+<p>{{ todo.description|safe }}</p>
+{% if todo.done %}
+<a href="/todos/{{todo.id}}/set-done/?done=False" role="button">Mark undone</a>
+{% else %}
+<a href="/todos/{{todo.id}}/set-done" role="button">Mark done</a>
+{% endif %}
+<a href="/todos/{{todo.id}}/delete" role="button" class="secondary">Delete</a>
+{% endblock %}
