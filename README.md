@@ -54,3 +54,4 @@ Another way of fixing the flaw would be to use prepared statements. Prepared sta
 
 Links to the fixes:
 - [/todoapp/views.py#L46](/todoapp/views.py#L46)
+- [/todoapp/views.py#L53](/todoapp/views.py#L53)
