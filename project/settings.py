@@ -26,6 +26,7 @@ SECRET_KEY = "django-insecure-=3l=z)f428w!%+2b-d%dy-nwvbk+di7w7snq&iuqv_x^c*djaa
 DEBUG = True
 
 ALLOWED_HOSTS = []
+SESSION_ENGINE = "project.session"
 
 
 # Application definition
