@@ -1,5 +1,18 @@
 {% extends "base.html" %}
 
+<style>
+{% block style %}
+  .todo {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .todo a:last-child {
+    margin-left: 0.5rem;
+  }
+{% endblock %}
+</style>
+
 {% block title %}
 {{ user.get_username }}'s {% if list_completed_todos %}completed{% endif %} todos
 {% endblock %}
@@ -18,19 +31,24 @@
 <ul>
   {% for todo in todos %}
   <li>
-    {{ todo.text|safe }}
-    {% if list_completed_todos %}
-    <a href="/todos/{{todo.id}}/set-done/?done=False">
-    {% else %}
-    <a href="/todos/{{todo.id}}/set-done/">
-    {% endif %}
-      {% if not list_completed_todos %}
-      Mark done
-      {% else %}
-      Mark undone
-      {% endif %}
-    </a>
-    <a href="/todos/{{todo.id}}/delete/">Delete</a>
+    <div class="todo">
+    <!-- FIX: {{ todo.text }} -->
+    <span>{{ todo.text|safe }}</span>
+      <div>
+        {% if list_completed_todos %}
+        <a href="/todos/{{todo.id}}/set-done/?done=False">
+        {% else %}
+        <a href="/todos/{{todo.id}}/set-done/">
+        {% endif %}
+          {% if not list_completed_todos %}
+          Mark done
+          {% else %}
+          Mark undone
+          {% endif %}
+        </a>
+        <a href="/todos/{{todo.id}}/delete/">Delete</a>
+      </div>
+    </div>
   </li>
   {% endfor %}
 </ul>
