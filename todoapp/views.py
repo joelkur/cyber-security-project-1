@@ -1,7 +1,6 @@
 from django.http.response import HttpResponseForbidden
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
-from django.views.decorators.csrf import csrf_exempt
 from .models import Todo
 
 

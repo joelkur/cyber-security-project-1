@@ -60,7 +60,16 @@ Links to the fixes:
 Links to the flaw sources:
 - [/todoapp/views.py#L43](/todoapp/templates/todos.html#L22)
 
-The description of todos is assumed to be safe and is rendered as-is to the HTML. This is problematic as now potentially 
+The title and description of todos is assumed to be safe and is rendered as-is to the HTML. This makes the application vulnerable to XSS, as an attacker may enter malicious javascript to the input fields, that are then executed on the user's browser. This could especially be dangerous with broken access control, as an attacker could e.g. create a todo with malicious input and send link to that todo to a group of target users. The malicious script may, for example, read the visiting user's session and send it to the attacker.
+
+This scenario can be reproduced by, for example, with the following steps:
+1. Log in with `alice`
+2. To one of the input fields in "Add new todo" form, write `<script>alert(document.cookie)</script>`, and submit the form
+3. Copy the link of the new todo to clipboard, log out and login with `bob`
+4. Go to the link in clipboard
+5. Now an alert should appear containing the contents of bob's cookie
+
+This can be fixed by escaping the user input, which prevents executing user input as code.
 
 Links to the fixes:
 - [/todoapp/views.py#L46](/todoapp/templates/todos.html#L21)
@@ -69,9 +78,8 @@ Links to the fixes:
 Links to the flaw sources:
 - [/project/session.py#L4](/project/session.py#L5)
 
-Session keys are predictable and sessions are not invalidated during logout. This can lead to session hijacking meaning an attacker can impersonate other users. Since the session key is predictable and not properly invalidated, an attacker could easily guess session keys by brute forcing it.
+Session keys are predictable and sessions are not invalidated during logout. This can lead to session hijacking meaning an attacker can impersonate other users. Since the session key is predictable and not properly invalidated, an attacker could easily guess session keys by brute forcing it. Also, session cookie is accessible with javascript, meaning that combined with an XSS attack an attacker can access the session key.
 
-The session key should be fixed to be unpredictable, such as securely generated random bytes. The session should also be expired and invalidated when the user logs out of the system.
+The session key should be fixed to be unpredictable, such as securely generated random bytes. The session should also be expired and invalidated when the user logs out of the system. Django has this functionality already built-in, so again a simple fix in this application would be to remove the custom `SessionStore` and use a default one.
 
-Django has this functionality already built-in, so again a simple fix in this application would be to remove the custom `SessionStore` and use a default one.
-
+To fix the session cookie being accessible with javascript, the session cookie should be set as HTTP only.

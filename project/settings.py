@@ -27,6 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 SESSION_ENGINE = "project.session"
+SESSION_COOKIE_HTTPONLY = False
 
 
 # Application definition
