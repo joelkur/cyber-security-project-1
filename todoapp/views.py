@@ -1,19 +1,20 @@
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
-from django.db import connection
 from .models import Todo
 
 
 @login_required
+def todo_delete(request, todo_id):
+    Todo.objects.filter(pk=todo_id).delete()
+    return redirect("/")
+
+
+@login_required
 def todo_set_done(request, todo_id):
-    is_done = request.GET.get("done", True)
-
-    with connection.cursor() as cursor:
-        cursor.execute(
-            "UPDATE todoapp_todo SET done = %s WHERE id = %s", [is_done, str(todo_id)]
-        )
-
-    return redirect("/" if not is_done else "/todos/completed/")
+    todo = Todo.objects.get(pk=todo_id)
+    todo.done = not todo.done
+    todo.save()
+    return redirect("/" if todo.done else "/todos/completed/")
 
 
 @login_required
@@ -26,8 +27,9 @@ def todo_add_view(request):
 
 @login_required
 def todo_list_view(request, list_completed_todos=False):
-    todos = Todo.objects.filter(user=request.user, done=list_completed_todos)
-
+    search = request.GET.get("search", "")
+    query = f"SELECT id, text, done FROM todoapp_todo WHERE user_id = {request.user.id} AND done = {list_completed_todos} AND text LIKE '%{search}%'"
+    todos = Todo.objects.raw(query)
     return render(
         request,
         "todos.html",

@@ -7,11 +7,18 @@
 {% block content %}
 <h1>Todos</h1>
 
+<form method="GET">
+  <div class="grid">
+    <input id="search" name="search" placeholder="Search todos" />
+    <button type="submit">Search</button>
+  </div>
+</form>
+
 {% if todos|length %}
 <ul>
   {% for todo in todos %}
   <li>
-    {{ todo.text }}
+    {{ todo.text|safe }}
     {% if list_completed_todos %}
     <a href="/todos/{{todo.id}}/set-done/?done=False">
     {% else %}
@@ -23,7 +30,7 @@
       Mark undone
       {% endif %}
     </a>
-    <a href="#">Delete</a>
+    <a href="/todos/{{todo.id}}/delete/">Delete</a>
   </li>
   {% endfor %}
 </ul>
