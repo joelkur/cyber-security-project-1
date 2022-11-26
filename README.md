@@ -14,8 +14,8 @@ A todo app with security flaws.
 The `initdatabase` command creates the following users:
 
 - admin:admin
-- user1:user1
-- user2:user2
+- alice:redqueen
+- bob:squarepants
 
 ## Flaws
 
