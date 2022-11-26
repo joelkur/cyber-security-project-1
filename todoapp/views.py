@@ -43,7 +43,7 @@ def todo_add_view(request):
             description=request.POST.get("description"),
         )
         todo.save()
-    return redirect("/")
+    return redirect(request.META.get("HTTP_REFERER"), "/")
 
 
 @login_required
