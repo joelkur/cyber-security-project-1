@@ -42,6 +42,20 @@ def todo_list_view(request, list_completed_todos=False):
     search = request.GET.get("search", "")
     query = f"SELECT id, text, done FROM todoapp_todo WHERE user_id = {request.user.id} AND done = {list_completed_todos} AND text LIKE '%{search}%'"
     todos = Todo.objects.raw(query)
+
+    # Better way to get list of todos without SQL injection
+    # todos = Todo.objects.filter(
+    #     user=request.user,
+    #     done=list_completed_todos,
+    #     text__contains=search,
+    # )
+
+    # Another fix via prepared statement
+    # query = f"SELECT id, text, done FROM todoapp_todo WHERE user_id = %s AND done = %s AND text LIKE %s"
+    # todos = Todo.objects.raw(
+    #     query, [request.user.id, list_completed_todos, f"%{search}%"]
+    # )
+
     return render(
         request,
         "todos.html",
