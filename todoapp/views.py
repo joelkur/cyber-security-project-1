@@ -31,6 +31,10 @@ def todo_set_done(request, todo_id):
 @login_required
 def todo_detail_view(request, todo_id):
     todo = Todo.objects.get(pk=todo_id)
+
+    # if todo.user != request.user:
+    #     return HttpResponseForbidden()
+
     return render(request, "todo-detail.html", {"todo": todo})
 
 

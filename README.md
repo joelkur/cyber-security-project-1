@@ -32,7 +32,7 @@ Links to the flaw sources:
 - [/todoapp/views.py#L9](/todoapp/views.py#L9)
 - [/todoapp/views.py#L20](/todoapp/views.py#L20)
 
-Currently it is permitted to modify todos of other users. One could, for example, on any authenticated account iterate through possible todo id's and modify or delete the todo regardless of whether the todo belongs to the requesting user.
+Currently it is permitted to view details or modify todos of other users. One could, for example, on any authenticated account iterate through possible todo id's and access or modify or delete the todo regardless of whether the todo belongs to the requesting user. To reproduce this, with the initial test data log in with e.g. user `bob` and go to link http://localhost:8000/todos/10/. This should open a view that displays todo belonging to user `alice` - with the ability to mark the todo as done or delete it.
 
 This can be fixed by implementing a check that the user matches the owner of the target resource, and if a mismatch occurs the access should be prevented. Both of the views containing the flaw has commented out code for a possible fix.
 
