@@ -40,7 +40,6 @@
 
 <h2>Add new todo</h2>
 <form action="todos" method="POST">
-  {% csrf_token %}
   <label for="text">Todo description</label>
   <input id="text" name="text" />
   <button type="submit">Add</button>

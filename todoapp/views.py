@@ -1,5 +1,6 @@
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 from .models import Todo
 
 
@@ -18,6 +19,7 @@ def todo_set_done(request, todo_id):
 
 
 @login_required
+@csrf_exempt
 def todo_add_view(request):
     if request.method == "POST":
         todo = Todo(user=request.user, text=request.POST.get("text"))
