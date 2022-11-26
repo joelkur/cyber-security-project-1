@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 
 <head>
   <title>{% block title %}{% endblock %}</title>
@@ -7,28 +7,61 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="css/style.css" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
+  <style>
+    
+    #theme-btn {
+      width: auto;
+      border: none;
+    }
+
+    #theme-btn:not(:focus):hover {
+      background: none;
+    }
+
+  </style>
 </head>
 
 <body>
 
   <main class="container">
-    {% if user.is_authenticated %}
     <nav>
       <ul>
+        {% if user.is_authenticated %}
         <li><a href="/">Todos</a></li>
         <li><a href="/todos/completed/">Completed</a></li>
+        {% else %}
+        <li><strong>Todo app</strong></li>
+        {% endif %}
       </ul>
       <ul>
+        {% if user.is_authenticated %}
         <li><strong>Logged in as {{ user.get_username }}</strong></li>
+        {% endif %}
+        <li><button id="theme-btn" role="link">Turn dark mode</button></li>
+        {% if user.is_authenticated %}
         <li><a href="/logout/">Log out</a></li>
+        {% endif %}
       </ul>
     </nav>
-    {% endif %}
 
     {% block content %}{% endblock %}
   </main>
 
+  <script>
+    const root = document.querySelector("html");
+    const themeBtn = document.querySelector("#theme-btn");
+
+    const getNextTheme = () => root.getAttribute("data-theme") === 'light' ? 'dark' : 'light'
+
+    const setTheme = (theme) => {
+      if (!theme) return
+      root.setAttribute("data-theme", theme)
+      localStorage.setItem("theme", theme)
+      themeBtn.textContent = `Turn ${getNextTheme()} mode`
+    }
+    themeBtn.onclick = () => setTheme(getNextTheme())
+    setTheme(localStorage.getItem("theme"))
+  </script>
 
 </body>
-
 </html>

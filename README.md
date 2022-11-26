@@ -1,6 +1,6 @@
 # cyber-security-project-1
 
-A TODO app with security flaws.
+A todo app with security flaws.
 
 ## Setup
 
