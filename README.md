@@ -19,11 +19,6 @@ The `initdatabase` command creates the following users:
 
 ## Flaws
 
-FLAW 1:
-exact source link pinpointing flaw 1...
-description of flaw 1...
-how to fix it...
-
 ### Flaw 1: [Cryptographic Failure](https://owasp.org/Top10/A02_2021-Cryptographic_Failures/)
 Link to flaw: [/todoapp/models.py#L11](/todoapp/models.py#L11)
 
