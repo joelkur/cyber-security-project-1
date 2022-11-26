@@ -1,3 +1,4 @@
+from django.http.response import HttpResponseForbidden
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
@@ -6,13 +7,22 @@ from .models import Todo
 
 @login_required
 def todo_delete(request, todo_id):
-    Todo.objects.filter(pk=todo_id).delete()
+    todo = Todo.objects.get(pk=todo_id)
+
+    # if todo.user != request.user:
+    #    return HttpResponseForbidden()
+
+    todo.delete()
     return redirect("/")
 
 
 @login_required
 def todo_set_done(request, todo_id):
     todo = Todo.objects.get(pk=todo_id)
+
+    # if todo.user != request.user:
+    #    return HttpResponseForbidden()
+
     todo.done = not todo.done
     todo.save()
     return redirect("/" if todo.done else "/todos/completed/")
