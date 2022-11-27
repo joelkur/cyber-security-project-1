@@ -65,7 +65,7 @@ Links to the fixes:
 
 ### Flaw 4: [Cross-site scripting (XSS)](https://owasp.org/Top10/A03_2021-Injection/)
 Links to the flaw sources:
-- [/project/settings.py#69](/project/settings.py#L69)
+- [/project/settings.py#69](/project/settings.py#L73)
 
 Currently any user input is not escaped before sending rendered HTML to users, meaning that any user input gets rendered as-is to the document. This makes the application vulnerable to XSS, as an attacker may enter e.g. malicious javascript to the input fields, that are then executed on the user's browser. This could especially be dangerous when combined with broken access control, as an attacker could e.g. create a todo with malicious input and send link to that todo to a group of target users. The malicious script may, for example, read the visiting user's session and send it to the attacker.
 
@@ -79,7 +79,7 @@ One way of reproducing this scenario can be achieved with the following steps:
 In this particular case, the root of the issue comes from the project settings, where templates are configured to not automatically escape user input. Removing this line enables the automatic input escaping functionality and thus fixing XSS issues.
 
 Links to the fixes:
-- [/project/settings.py#69](/project/settings.py#L69)
+- [/project/settings.py#69](/project/settings.py#L73)
 
 ### Flaw 5: [Identification and Authentication Failures](https://owasp.org/Top10/A07_2021-Identification_and_Authentication_Failures/)
 Links to the flaw sources:
