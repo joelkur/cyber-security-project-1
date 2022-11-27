@@ -24,11 +24,16 @@ The `initdatabase` command creates the following users:
 
 ### Flaw 1: [Cryptographic Failure](https://owasp.org/Top10/A02_2021-Cryptographic_Failures/)
 Links to the flaw sources:
-- [/todoapp/models.py#L11](/todoapp/models.py#L11)
+- [/todoapp/models.py#L9](/todoapp/models.py#L9)
+- [/todoapp/models.py#L13](/todoapp/models.py#L13)
 
 Currently raw passwords are stored in database unencrypted. This is not ideal as the passwords of all users might potentially be leaked if the site gets hacked. The impact of this vulnerability is described in more detail in flaw 3.
 
-A simple fix for this could be using Django's built-in password management for hashing and other password related logic. Since the `User` model class is extended from `AbstractUser`, which already has password hashing functionality, the `set_password` and `check_password` methods could simply be removed in `User` model.
+A simple fix for this could be using Django's built-in password management for hashing and other password related logic. Since the `User` model class is extended from `AbstractUser`, which already has password hashing functionality, the `set_password` and `check_password` methods could simply be removed in `User` model to enable Django's original password management functionality.
+
+Below are links to Django's built-in way of handling passwords, found in the Django source code:
+https://github.com/django/django/blob/main/django/contrib/auth/hashers.py#L38
+https://github.com/django/django/blob/main/django/contrib/auth/hashers.py#L72
 
 ### Flaw 2: [Broken Access Control](https://owasp.org/Top10/A01_2021-Broken_Access_Control/)
 Links to the flaw sources:
