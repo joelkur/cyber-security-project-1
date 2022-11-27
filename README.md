@@ -37,16 +37,18 @@ https://github.com/django/django/blob/main/django/contrib/auth/hashers.py#L72
 
 ### Flaw 2: [Broken Access Control](https://owasp.org/Top10/A01_2021-Broken_Access_Control/)
 Links to the flaw sources:
-- [/todoapp/views.py#L9](/todoapp/views.py#L9)
-- [/todoapp/views.py#L20](/todoapp/views.py#L20)
+- [/todoapp/views.py#L8](/todoapp/views.py#L8)
+- [/todoapp/views.py#L19](/todoapp/views.py#L19)
+- [/todoapp/views.py#L31](/todoapp/views.py#L31)
 
 Currently it is permitted to view details or modify todos of other users. One could, for example, on any authenticated account iterate through possible todo id's and access or modify or delete the todo regardless of whether the todo belongs to the requesting user. To reproduce this, with the initial test data log in with e.g. user `bob` and go to link http://localhost:8000/todos/10/. This should open a view that displays todo belonging to user `alice` - with the ability to mark the todo as done or delete it.
 
-This can be fixed by implementing a check that the user matches the owner of the target resource, and if a mismatch occurs the access should be prevented. Both of the views containing the flaw has commented out code for a possible fix.
+This can be fixed by implementing a check that the requesting user matches the owner of the target resource, and if a mismatch occurs the access should be prevented. Each of the views containing the flaw has commented out code for a possible fix.
 
 Links to the fixes:
-- [/todoapp/views.py#L12](/todoapp/views.py#L12)
-- [/todoapp/views.py#L23](/todoapp/views.py#L23)
+- [/todoapp/views.py#L11](/todoapp/views.py#L11)
+- [/todoapp/views.py#L22](/todoapp/views.py#L22)
+- [/todoapp/views.py#L34](/todoapp/views.py#L34)
 
 ### Flaw 3: [SQL injection](https://owasp.org/Top10/A03_2021-Injection/)
 Links to the flaw sources:
