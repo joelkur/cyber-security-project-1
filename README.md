@@ -6,6 +6,7 @@ A todo app with security flaws.
 
 As prerequisities python 3 and django should be installed. The course's [installation instructions](https://cybersecuritybase.mooc.fi/installation-guide) should be enough to get everything needed installed.
 
+### Installing and running the project
 1. Clone the repository with `git clone https://github.com/joelkur/cyber-security-project-1.git`
 2. In the project root folder, run migrations with `python3 manage.py migrate`
 3. Create test data with `python3 manage.py initdatabase`
