@@ -1,4 +1,9 @@
 {% extends "base.html" %}
+
+{% block title %}
+{{ todo.title }}
+{% endblock %}
+
 {% block content %}
 <a href="/">Back to todo list</a>
 <h1>{{ todo.title|safe }}</h1>
