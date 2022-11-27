@@ -52,7 +52,7 @@ Links to the fixes:
 
 ### Flaw 3: [SQL injection](https://owasp.org/Top10/A03_2021-Injection/)
 Links to the flaw sources:
-- [/todoapp/views.py#L43](/todoapp/views.py#L55)
+- [/todoapp/views.py#L55](/todoapp/views.py#L55)
 
 The todo search functionality is vulnerable to SQL injections. This is a critical issue as a hacker can access anything in the database via the SQL injection. For example, here we can see the impact of the unencrypted passwords described in flaw 1, as with a SQL injection it is possible to retrieve plaintext passwords for each user.
 
