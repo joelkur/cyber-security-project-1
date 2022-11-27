@@ -83,10 +83,15 @@ Links to the fixes:
 
 ### Flaw 5: [Identification and Authentication Failures](https://owasp.org/Top10/A07_2021-Identification_and_Authentication_Failures/)
 Links to the flaw sources:
-- [/project/session.py#L4](/project/session.py#L5)
+- [/project/session.py#L5](/project/session.py#L5)
+- [/project/settings.py#L34](/project/settings.py#L34)
 
 Session keys are predictable and sessions are not invalidated during logout. This can lead to session hijacking meaning an attacker can impersonate other users. Since the session key is predictable and not properly invalidated, an attacker could easily guess session keys by brute forcing it. Also, session cookie is accessible with javascript, meaning that combined with an XSS attack an attacker can access the session key.
 
-The session key should be fixed to be unpredictable, such as securely generated random bytes. The session should also be expired and invalidated when the user logs out of the system. Django has this functionality already built-in, so again a simple fix in this application would be to remove the custom `SessionStore` and use a default one.
+The session key should be fixed to be unpredictable, as an example a securely generated random bytes. The session should also be expired and invalidated when the user logs out of the system. Django has this functionality already built-in, so again a simple fix in this application would be to remove the custom `SessionStore` and use Django's built-in one.
 
 To fix the session cookie being accessible with javascript, the session cookie should be set as HTTP only.
+
+Links to the fixes:
+- [/project/settings.py#L30](/project/settings.py#L30)
+- [/project/settings.py#L33](/project/settings.py#L33)

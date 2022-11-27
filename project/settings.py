@@ -26,7 +26,11 @@ SECRET_KEY = "django-insecure-=3l=z)f428w!%+2b-d%dy-nwvbk+di7w7snq&iuqv_x^c*djaa
 DEBUG = True
 
 ALLOWED_HOSTS = []
+
+# Remove this line to enable Django's default session engine
 SESSION_ENGINE = "project.session"
+
+# Set to true to fix session cookie accessible by javascript
 SESSION_COOKIE_HTTPONLY = False
 
 
