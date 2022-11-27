@@ -32,8 +32,7 @@
   {% for todo in todos %}
   <li>
     <div class="todo">
-    <!-- FIX: {{ todo.title }} -->
-    <a href="/todos/{{todo.id}}/">{{ todo.title|safe }}</a>
+    <a href="/todos/{{todo.id}}/">{{ todo.title }}</a>
     <div>
       {% if list_completed_todos %}
       <a href="/todos/{{todo.id}}/set-done/?done=False">

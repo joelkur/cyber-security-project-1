@@ -65,21 +65,21 @@ Links to the fixes:
 
 ### Flaw 4: [Cross-site scripting (XSS)](https://owasp.org/Top10/A03_2021-Injection/)
 Links to the flaw sources:
-- [/todoapp/views.py#L43](/todoapp/templates/todos.html#L22)
+- [/project/settings.py#69](/project/settings.py#L69)
 
-The title and description of todos is assumed to be safe and is rendered as-is to the HTML. This makes the application vulnerable to XSS, as an attacker may enter malicious javascript to the input fields, that are then executed on the user's browser. This could especially be dangerous with broken access control, as an attacker could e.g. create a todo with malicious input and send link to that todo to a group of target users. The malicious script may, for example, read the visiting user's session and send it to the attacker.
+Currently any user input is not escaped before sending rendered HTML to users, meaning that any user input gets rendered as-is to the document. This makes the application vulnerable to XSS, as an attacker may enter e.g. malicious javascript to the input fields, that are then executed on the user's browser. This could especially be dangerous when combined with broken access control, as an attacker could e.g. create a todo with malicious input and send link to that todo to a group of target users. The malicious script may, for example, read the visiting user's session and send it to the attacker.
 
-This scenario can be reproduced by, for example, with the following steps:
+One way of reproducing this scenario can be achieved with the following steps:
 1. Log in with `alice`
 2. To one of the input fields in "Add new todo" form, write `<script>alert(document.cookie)</script>`, and submit the form
 3. Copy the link of the new todo to clipboard, log out and login with `bob`
 4. Go to the link in clipboard
 5. Now an alert should appear containing the contents of bob's cookie
 
-This can be fixed by escaping the user input, which prevents executing user input as code.
+In this particular case, the root of the issue comes from the project settings, where templates are configured to not automatically escape user input. Removing this line enables the automatic input escaping functionality and thus fixing XSS issues.
 
 Links to the fixes:
-- [/todoapp/views.py#L46](/todoapp/templates/todos.html#L21)
+- [/project/settings.py#69](/project/settings.py#L69)
 
 ### Flaw 5: [Identification and Authentication Failures](https://owasp.org/Top10/A07_2021-Identification_and_Authentication_Failures/)
 Links to the flaw sources:

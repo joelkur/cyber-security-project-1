@@ -66,6 +66,7 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
             ],
+            "autoescape": False,  # To prevent XSS flaw, remove this line
         },
     },
 ]

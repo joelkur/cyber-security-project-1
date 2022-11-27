@@ -6,8 +6,8 @@
 
 {% block content %}
 <a href="/">Back to todo list</a>
-<h1>{{ todo.title|safe }}</h1>
-<p>{{ todo.description|safe }}</p>
+<h1>{{ todo.title }}</h1>
+<p>{{ todo.description }}</p>
 {% if todo.done %}
 <a href="/todos/{{todo.id}}/set-done/?done=False" role="button">Mark undone</a>
 {% else %}
